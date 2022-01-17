@@ -1,15 +1,21 @@
 import express, { Request, Response } from 'express'
-import bodyParser from 'body-parser'
+import dotenv from "dotenv"
+// import routes
+// product
+// user
+// order
+
+dotenv.config()
 
 const app: express.Application = express()
-const address: string = "0.0.0.0:3000"
-
-app.use(bodyParser.json())
+const PORT = process.env.PORT || 3000
 
 app.get('/', function (req: Request, res: Response) {
     res.send('Hello World!')
 })
 
-app.listen(3000, function () {
-    console.log(`starting app on: ${address}`)
+app.listen(PORT, function () {
+    console.log(`starting app on port: ${PORT}`)
 })
+
+export default app;

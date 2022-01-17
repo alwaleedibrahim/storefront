@@ -4,10 +4,11 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "start": "node src/server.ts",
+    "start": "nodemon --watch ./**/*.ts --exec ts-node ./src/server.ts ",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess 'node ./dist/server.js'",
-    "test": "jasmine-ts",
-    "tsc": "tsc"
+    "jasmine": "npx tsc && jasmine",
+    "test": "npx tsc && npx db-migrate --env test up && npx cross-env ENV=test npx jasmine && npx db-migrate down --env test -c 4",
+    "build": "npx tsc"
   },
   "author": "Udacity",
   "license": "ISC",
