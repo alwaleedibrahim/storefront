@@ -4,11 +4,8 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "start": "nodemon --watch ./**/*.ts --exec ts-node ./src/server.ts ",
-    "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess 'node ./dist/server.js'",
-    "jasmine": "npx tsc && jasmine",
-    "test": "npx tsc && npx db-migrate --env test up && npx cross-env ENV=test npx jasmine && npx db-migrate down --env test -c 4",
-    "build": "npx tsc"
+    "jasmine": "jasmine",
+    "build": "npx tsc --outDir ./dist"
   },
   "author": "Udacity",
   "license": "ISC",
