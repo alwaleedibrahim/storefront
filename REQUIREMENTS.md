@@ -41,5 +41,5 @@ These are the notes from a meeting with the frontend developer that describe wha
 - status of order (active or complete)
 
 ## Database Schema
-![database schema](readme_images/schema.png)
+![database schema](https://raw.githubusercontent.com/alwaleedibrahim/storefront/master/readme_images/schema.png)
 
