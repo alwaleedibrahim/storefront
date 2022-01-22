@@ -1,6 +1,6 @@
 # Requirements
 
-## Database Realtions
+## Database Relations
 ![database schema](https://raw.githubusercontent.com/alwaleedibrahim/storefront/master/readme_images/schema.png)
 
 ## Database Tables
@@ -39,3 +39,28 @@
 | order_id | BIGINT REFERENCES orders(id) |
 | product_id | BIGINT REFERENCES products(id) |
 | quantity | INTEGER |
+
+## Routes
+
+### Users
+
+| Method | Route | Description |
+| ---- | ----- | ----- |
+| GET | /users | Index |
+| GET | /users/:id | Show |
+| POST | /users | Create |
+
+### Products
+| Method | Route | Description |
+| ---- | ----- | ----- |
+| GET | /products | Index |
+| GET | /products/:id | Show |
+| POST | /products | Create |
+
+### Orders
+| Method | Route | Description |
+| ---- | ----- | ----- |
+| GET | /orders/user/:id | Show all orders by user |
+| GET | /orders/user/:id/current | Show current order by user |
+| POST | /orders | Create |
+| POST | /orders/addProduct | Add product to order |
