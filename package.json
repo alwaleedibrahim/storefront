@@ -7,7 +7,7 @@
     "db-up": "npx db-migrate --env dev up",
     "db-down": "npx db-migrate --env dev down",
     "build": "npx tsc --outDir ./dist",
-    "test": "npx db-migrate --env test up &&  npx cross-env ENV=test npx jasmine dist/tests/*.js && npx db-migrate down --env test -c 4 ",
+    "test": "npm run build && npx db-migrate --env test up &&  npx cross-env ENV=test npx jasmine dist/tests/*.js && npx db-migrate down --env test -c 4 ",
     "start": "npm run build && npm run db-up && nodemon --watch './**/*.ts' --exec ts-node ./src/server.ts"
   },
   "author": "Udacity",
@@ -33,6 +33,7 @@
     "jasmine": "^3.6.4",
     "jasmine-spec-reporter": "^7.0.0",
     "jasmine-ts": "^0.3.0",
+    "supertest": "^6.2.2",
     "ts-node": "^9.1.1",
     "tsc-watch": "^4.2.9"
   },
