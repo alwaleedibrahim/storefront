@@ -36,6 +36,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/cookiejar@*":
+  "integrity" "sha512-t73xJJrvdTjXrn4jLS9VSGRbz0nUY3cl2DMGDU48lKl+HR9dbbjW2A9r3g40VA++mQpy6uuHg33gy7du2BKpog=="
+  "resolved" "https://registry.npmjs.org/@types/cookiejar/-/cookiejar-2.1.2.tgz"
+  "version" "2.1.2"
+
 "@types/express-serve-static-core@^4.17.18":
   "integrity" "sha512-P1BJAEAW3E2DJUlkgq4tOL3RyMunoWXqbSCygWo5ZIWTjUgN1YnaXWW4VWl/oc8vs/XoYibEGBKP0uZyF4AHig=="
   "resolved" "https://registry.npmjs.org/@types/express-serve-static-core/-/express-serve-static-core-4.17.28.tgz"
@@ -96,6 +101,21 @@
   dependencies:
     "@types/mime" "^1"
     "@types/node" "*"
+
+"@types/superagent@*":
+  "integrity" "sha512-iiXaOL2wSbnSY4qg0mFPWJHL9iwyEsoNYwaHF2w58/fsVAQJlj+KUfFAFZu+nzbz+b7dUprJEAc+O9vhHHhQTA=="
+  "resolved" "https://registry.npmjs.org/@types/superagent/-/superagent-4.1.14.tgz"
+  "version" "4.1.14"
+  dependencies:
+    "@types/cookiejar" "*"
+    "@types/node" "*"
+
+"@types/supertest@^2.0.11":
+  "integrity" "sha512-uci4Esokrw9qGb9bvhhSVEjd6rkny/dk5PK/Qz4yxKiyppEI+dOPlNrZBahE3i+PoKFYyDxChVXZ/ysS/nrm1Q=="
+  "resolved" "https://registry.npmjs.org/@types/supertest/-/supertest-2.0.11.tgz"
+  "version" "2.0.11"
+  dependencies:
+    "@types/superagent" "*"
 
 "abbrev@1":
   "integrity" "sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q=="

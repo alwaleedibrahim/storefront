@@ -30,7 +30,7 @@ export class OrderStore {
     async addProduct (orderProduct: OrderProduct): Promise<OrderProduct> {
         try {   
             const conn = await Client.connect()
-            const sql = "INSERT INTO order_product (order_id, product_id, quantity) VALUES ($1, $2, $3)"
+            const sql = "INSERT INTO order_product (order_id, product_id, quantity) VALUES ($1, $2, $3) RETURNING *"
             const result = await conn.query(sql, [
                 orderProduct.order_id, 
                 orderProduct.product_id, 
@@ -40,7 +40,7 @@ export class OrderStore {
             return result.rows[0]
         }
         catch(err) {
-            throw new Error("Cannot add product to order")
+            throw new Error(`Cannot add product to order. ${err}`)
         }
     }
 
