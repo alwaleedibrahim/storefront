@@ -25,7 +25,7 @@ const show = async (req: Request, res: Response) => {
 
 const create = async (req: Request, res: Response) => {
     const user: User = {
-        id: NaN,
+        id: 0,
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         password: req.body.password

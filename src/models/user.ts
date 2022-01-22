@@ -1,7 +1,7 @@
 import Client from "../database"
 
 export type User = {
-    id: number;
+    id: Number,
     firstname: string;
     lastname: string;
     password: string
@@ -37,7 +37,7 @@ export class UserStore {
     async create(user: User): Promise<User> {
         try {
             const conn = await Client.connect()
-            const sql = "INSERT INTO users (firstName, lastName, password) VALUES ($1, $2, $3) RETURNING *"
+            const sql = "INSERT INTO users (firstname, lastname, password) VALUES ($1, $2, $3) RETURNING *"
             const result = await conn.query(sql, [user.firstname, user.lastname, user.password])
             conn.release()
             return result.rows[0]
