@@ -22,8 +22,7 @@ describe("User Model tests", ()=> {
             lastname: "lastname_test",
             password: "password_test"
         });
-        //TODO: password encryption not yet implemented
-        expect(user.password).toEqual("password_test") // ADD NOT
+        expect(user.password).not.toBe("password_test")
     })
     
     it("Shows user", async () => {
