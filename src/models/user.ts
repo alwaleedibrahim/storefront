@@ -1,6 +1,9 @@
 import Client from "../database"
 import bcrypt from "bcrypt"
 
+const pepper = process.env.PEPPER
+const saltRounds = process.env.SALT_ROUNDS || "10"
+
 export type User = {
     id: Number,
     firstname: string;
@@ -37,18 +40,33 @@ export class UserStore {
 
     async create(user: User): Promise<User> {
         try {
-            const saltRounds = 12
-            bcrypt.hash(user.password, saltRounds, function(err, hash) {
-                user.password = hash
-            });
+            const hashedPassword = bcrypt.hashSync(user.password + pepper, parseInt(saltRounds))
             const conn = await Client.connect()
             const sql = "INSERT INTO users (firstname, lastname, password) VALUES ($1, $2, $3) RETURNING *"
-            const result = await conn.query(sql, [user.firstname, user.lastname, user.password])
+            const result = await conn.query(sql, [user.firstname, user.lastname, hashedPassword])
             conn.release()
             return result.rows[0]
         }
         catch(err) {
             throw new Error("Cannot create user")
+        }
+    }
+
+    async auth(username: string, password: string) {
+        try {
+            const conn = await Client.connect()
+            const sql = "SELECT * FROM user WHERE id=($1)"
+            const result = await conn.query(sql, [username])
+            const user = result.rows[0]
+            if (user) {
+                if(bcrypt.compareSync(password + pepper, user.password)) {
+                    return user
+                }
+            }
+            return null
+        }
+        catch (err) {
+            throw new Error("Authentication failed")
         }
     }
 }
