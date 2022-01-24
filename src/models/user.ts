@@ -52,7 +52,7 @@ export class UserStore {
         }
     }
 
-    async auth(id: string, password: string) {
+    async auth(id: string, password: string): Promise<User | null> {
         try {
             const conn = await Client.connect()
             const sql = "SELECT * FROM user WHERE id=($1)"

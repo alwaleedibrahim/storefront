@@ -39,10 +39,25 @@ const create = async (req: Request, res: Response) => {
     }
 }
 
+const auth = async (req: Request, res: Response) => {
+    const id = req.body.id
+    const password = req.body.password
+    try {
+        const user = await user_store.auth(id, password)
+        if (!user) {
+            throw new Error("Authentication failed")
+        }
+        res.send(user)
+    }
+    catch (err) {
+        res.status(500).json(err)
+    }
+}
+
 
 const userRoutes = (app: express.Application) => {
-    app.get("/users", index)
-    app.get("/users/:id", show)
+    app.get("/users", auth, index)
+    app.get("/users/:id", auth, show)
     app.post("/users", create)
 }
 
