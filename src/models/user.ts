@@ -52,11 +52,11 @@ export class UserStore {
         }
     }
 
-    async auth(username: string, password: string) {
+    async auth(id: string, password: string) {
         try {
             const conn = await Client.connect()
             const sql = "SELECT * FROM user WHERE id=($1)"
-            const result = await conn.query(sql, [username])
+            const result = await conn.query(sql, [id])
             const user = result.rows[0]
             if (user) {
                 if(bcrypt.compareSync(password + pepper, user.password)) {
