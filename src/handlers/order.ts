@@ -1,7 +1,9 @@
 import express, {Request, Response} from "express"
 import {Order, OrderProduct, OrderStore} from "../models/order"
+import {Auth} from "./auth"
 
 const order_store = new OrderStore()
+const auth = new Auth()
 
 const create = async(req: Request, res: Response) => {
     const order: Order = {
@@ -55,8 +57,8 @@ const showCurrentOrder = async(req: Request, res: Response) => {
 }
 
 const orderRouters = (app: express.Application) => {
-    app.post("/orders", create)
-    app.post("/orders/addProduct", addProduct)
-    app.get("/orders/user/:id", ShowOrdersByUser)
-    app.get("/orders/user/:id/current", showCurrentOrder)
+    app.post("/orders", auth.verifyToken, create)
+    app.post("/orders/addProduct", auth.verifyToken, addProduct)
+    app.get("/orders/user/:id", auth.verifyToken, ShowOrdersByUser)
+    app.get("/orders/user/:id/current", auth.verifyToken, showCurrentOrder)
 }

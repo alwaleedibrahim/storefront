@@ -1,10 +1,9 @@
-import express, {Request, Response, NextFunction} from "express"
+import express, {Request, Response} from "express"
 import {User, UserStore} from "../models/user"
-import jwt from "jsonwebtoken"
-
-const tokenSecret: string = process.env.TOKEN_SECRET || "secret"
+import { Auth } from "./auth"
 
 const user_store = new UserStore()
+const auth = new Auth()
 
 const index = async (req: Request, res: Response) => {
     try {
@@ -36,7 +35,7 @@ const create = async (req: Request, res: Response) => {
     }
     try {
         const userCreated = await user_store.create(user)
-        const token = jwt.sign({user: userCreated}, tokenSecret)
+        const token = auth.sign(user)
         res.send(token)
     }
     catch(err) {
@@ -44,7 +43,7 @@ const create = async (req: Request, res: Response) => {
     }
 }
 
-const auth = async (req: Request, res: Response) => {
+const Depauth = async (req: Request, res: Response) => {
     const username = req.body.username
     const password = req.body.password
     try {
@@ -59,24 +58,9 @@ const auth = async (req: Request, res: Response) => {
     }
 }
 
-const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const authorizationHeader = req.headers.authorization
-        if (authorizationHeader) {
-            const token = authorizationHeader.split(" ")[1]
-            const decoded = jwt.verify(token, tokenSecret)
-        }
-        next()
-    }
-    catch (err) {
-        res.status(401)
-    }
-}
-
-
 const userRoutes = (app: express.Application) => {
-    app.get("/users", verifyToken, index)
-    app.get("/users/:id", verifyToken, show)
+    app.get("/users", auth.verifyToken, index)
+    app.get("/users/:id", auth.verifyToken, show)
     app.post("/users", create)
 }
 
