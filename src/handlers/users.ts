@@ -1,7 +1,6 @@
 import express, {Request, Response, NextFunction} from "express"
 import {User, UserStore} from "../models/user"
 import jwt from "jsonwebtoken"
-import { isNamedExportBindings } from "typescript"
 
 const tokenSecret: string = process.env.TOKEN_SECRET || "secret"
 
