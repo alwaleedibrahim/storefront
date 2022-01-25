@@ -1,6 +1,6 @@
 import express, {Request, Response} from "express"
 import {Product, ProductStore} from "../models/product"
-import {Auth} from "./auth"
+import {Auth} from "../helpers/auth"
 
 const product_store = new ProductStore()
 const auth = new Auth()
