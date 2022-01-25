@@ -6,10 +6,12 @@ describe("User Model tests", ()=> {
     it("Creates new user", async ()=> {
         const user = await user_store.create({
             id: 0,
+            username: "username_test",
             firstname: "firstname_test",
             lastname: "lastname_test",
             password: "password_test"
         });
+        expect(user.username).toBe("username_test")
         expect(user.firstname).toBe("firstname_test")
         expect(user.lastname).toBe("lastname_test")
         expect(typeof user.password).toBe("string")
@@ -18,6 +20,7 @@ describe("User Model tests", ()=> {
     it("Encypts password", async ()=> {
         const user = await user_store.create({
             id: 0,
+            username: "username_test1",
             firstname: "firstname_test",
             lastname: "lastname_test",
             password: "password_test"

@@ -6,9 +6,10 @@
   "scripts": {
     "db-up": "npx db-migrate --env dev up",
     "db-down": "npx db-migrate --env dev down",
+    "db_test_down": "npx db-migrate down --env test -c 4",
     "build": "npx tsc --outDir ./dist",
     "test": "npm run build && npx db-migrate --env test up &&  npx cross-env ENV=test npx jasmine dist/tests/*.js && npx db-migrate down --env test -c 4 ",
-    "start": "npm run build && npm run db-up && nodemon --watch './**/*.ts' --exec ts-node ./src/server.ts"
+    "start": "npm run build && npm run db-up && nodemon --watch './**/*.ts' --exec npx ts-node ./src/server.ts"
   },
   "author": "Udacity",
   "license": "ISC",
