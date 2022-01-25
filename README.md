@@ -51,4 +51,8 @@ npm run db-up
 ```
 npm run start
 ```
+- To run tests:
+```
+npm run test
+``
 
