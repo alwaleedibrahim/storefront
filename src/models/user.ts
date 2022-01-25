@@ -56,18 +56,21 @@ export class UserStore {
     async auth(username: string, password: string): Promise<User | null> {
         try {
             const conn = await Client.connect()
-            const sql = "SELECT * FROM user WHERE username=($1)"
+            const sql = "SELECT * FROM users WHERE username=($1)"
             const result = await conn.query(sql, [username])
             const user = result.rows[0]
             if (user) {
                 if(bcrypt.compareSync(password + pepper, user.password)) {
                     return user
                 }
+                else {
+                    throw new Error("incorrect password")
+                }
             }
             return null
         }
         catch (err) {
-            throw new Error("Authentication failed")
+            throw new Error(`Authentication failed: ${err}`)
         }
     }
 }

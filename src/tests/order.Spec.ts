@@ -9,6 +9,13 @@ const product_store = new ProductStore()
 
 describe("Order Model tests", ()=> {
     it("Creates new order", async ()=> {
+        const user = await user_store.create({
+            id: 0,
+            username: "username_test3",
+            firstname: "firstname_test",
+            lastname: "lastname_test",
+            password: "password_test"
+        });
         const order = await order_store.create({
             id: 0,
             status: "active",

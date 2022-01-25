@@ -35,9 +35,22 @@ describe("User Model tests", ()=> {
         expect(typeof user.lastname).toBe("string")
         expect(typeof user.password).toBe("string")
     })
+
     it("Show all users", async () => {
         const users = await user_store.index()
         expect(typeof users).toBe("object")
         expect(typeof users[0].id).toBe("number")
+    })
+
+    it("Authenticate user", async () => {
+        const user = await user_store.create({
+            id: 0,
+            username: "username_test2",
+            firstname: "firstname_test",
+            lastname: "lastname_test",
+            password: "password_test"
+        });
+        const tryAuth = await user_store.auth(user.username, "password_test")
+        expect(tryAuth).not.toBeNull()
     })
 })
