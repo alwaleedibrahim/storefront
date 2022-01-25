@@ -26,6 +26,7 @@ const show = async (req: Request, res: Response) => {
 const create = async (req: Request, res: Response) => {
     const user: User = {
         id: 0,
+        username: req.body.username,
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         password: req.body.password
@@ -40,10 +41,10 @@ const create = async (req: Request, res: Response) => {
 }
 
 const auth = async (req: Request, res: Response) => {
-    const id = req.body.id
+    const username = req.body.username
     const password = req.body.password
     try {
-        const user = await user_store.auth(id, password)
+        const user = await user_store.auth(username, password)
         if (!user) {
             throw new Error("Authentication failed")
         }
