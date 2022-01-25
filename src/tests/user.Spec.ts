@@ -1,4 +1,8 @@
 import {UserStore} from "../models/user"
+import app from "../server"
+import supertest from "supertest"
+
+const request = supertest(app)
 
 const user_store = new UserStore()
 
@@ -53,4 +57,55 @@ describe("User Model tests", ()=> {
         const tryAuth = await user_store.auth(user.username, "password_test")
         expect(tryAuth).not.toBeNull()
     })
+})
+
+describe("User handler tests", () => {
+    it("GET /users/:id works", async() => {
+        const response = await request.get("/users/1")
+        expect(response.status).toBe(200)
+    })
+
+    it("GET /users/:id sends error with invalid params", async() => {
+        const response = await request.get("/users/abc")
+        expect(response.status).not.toBe(200)
+    })
+
+    it("GET /users works", async() => {
+        const response = await request.get("/users")
+        expect(response.status).toBe(200)
+    })
+
+    it("POST /users works", async() => {
+        const response = await request.post("/users").send({
+            username: "username_test4",
+            firstname: "firstname_test",
+            lastname: "lastname_test",
+            password: "password_test"
+        })
+        expect(response.status).toBe(200)
+    })
+
+    it("POST /users sends error", async() => {
+        const response = await request.post("/users").send({
+            invalid_data: "invalid"
+        })
+        expect(response.status).not.toBe(200)
+    })
+
+    it("POST /login works", async() => {
+        const response = await request.post("/users").send({
+            username: "username_test",
+            password: "password_test"
+        })
+        expect(response.status).toBe(200)
+    })
+
+    it("POST /login sends error", async() => {
+        const response = await request.post("/users").send({
+            username: "invalid",
+            password: "invalid"
+        })
+        expect(response.status).not.toBe(200)
+    })
+
 })

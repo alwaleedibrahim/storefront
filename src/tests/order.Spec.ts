@@ -1,7 +1,10 @@
 import {OrderStore} from "../models/order"
 import {ProductStore} from "../models/product"
 import {UserStore} from "../models/user"
+import app from "../server"
+import supertest from "supertest"
 
+const request = supertest(app)
 
 const order_store = new OrderStore()
 const user_store = new UserStore()
@@ -56,5 +59,53 @@ describe("Order Model tests", ()=> {
         expect(Number(added.order_id)).toBe(1)
         expect(Number(added.product_id)).toBe(1)
         expect(Number(added.quantity)).toBe(1)
+    })
+})
+
+describe("Product handler tests", () => {
+    it("GET /orders/user/:id works", async() => {
+        const response = await request.get("/orders/user/1")
+        expect(response.status).toBe(200)
+    })
+
+    it("GET /orders/user/:id sends error with invalid params", async() => {
+        const response = await request.get("/orders/user/abc")
+        expect(response.status).not.toBe(200)
+    })
+
+    it("GET /orders/user/:id/current works", async() => {
+        const response = await request.get("/orders/user/1/current")
+        expect(response.status).toBe(200)
+    })
+
+    it("POST /orders works", async() => {
+        const response = await request.post("/orders").send({
+            status: "active",
+            user_id: 1
+        })
+        expect(response.status).toBe(200)
+    })
+
+    it("POST /orders sends error", async() => {
+        const response = await request.post("/orders").send({
+            invalid_data: "invalid"
+        })
+        expect(response.status).not.toBe(200)
+    })
+
+    it("POST /orders/addProduct works", async() => {
+        const response = await request.post("/orders/addProduct").send({
+            order_id: 1,
+            product_id: 1,
+            quantity: 1
+        })
+        expect(response.status).toBe(200)
+    })
+
+    it("POST /orders/addProduct sends error", async() => {
+        const response = await request.post("/orders/addProduct").send({
+            invalid_data: "invalid"
+        })
+        expect(response.status).not.toBe(200)
     })
 })
