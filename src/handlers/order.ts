@@ -62,3 +62,5 @@ const orderRouters = (app: express.Application) => {
     app.get("/orders/user/:id", auth.verifyToken, ShowOrdersByUser)
     app.get("/orders/user/:id/current", auth.verifyToken, showCurrentOrder)
 }
+
+export default orderRouters

@@ -34,7 +34,7 @@ const create = async (req: Request, res: Response) => {
         password: req.body.password
     }
     try {
-        const userCreated = await user_store.create(user)
+        await user_store.create(user)
         const token = auth.sign(user)
         res.send(token)
     }
@@ -43,7 +43,7 @@ const create = async (req: Request, res: Response) => {
     }
 }
 
-const Depauth = async (req: Request, res: Response) => {
+const login = async (req: Request, res: Response) => {
     const username = req.body.username
     const password = req.body.password
     try {
@@ -51,7 +51,8 @@ const Depauth = async (req: Request, res: Response) => {
         if (!user) {
             throw new Error("Authentication failed")
         }
-        res.send(user)
+        const token = auth.sign(user)
+        res.send(token)
     }
     catch (err) {
         res.status(500).json(err)
@@ -62,6 +63,7 @@ const userRoutes = (app: express.Application) => {
     app.get("/users", auth.verifyToken, index)
     app.get("/users/:id", auth.verifyToken, show)
     app.post("/users", create)
+    app.post("/login", login)
 }
 
 export default userRoutes

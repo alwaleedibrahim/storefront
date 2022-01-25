@@ -50,6 +50,7 @@
 | GET | /users | Index |
 | GET | /users/:id | Show |
 | POST | /users | Create |
+| POST | /login | Login |
 
 ### Products
 | Method | Route | Description |
