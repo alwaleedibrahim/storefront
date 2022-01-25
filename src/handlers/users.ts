@@ -1,6 +1,7 @@
-import express, {Request, Response} from "express"
+import express, {Request, Response, NextFunction} from "express"
 import {User, UserStore} from "../models/user"
 import jwt from "jsonwebtoken"
+import { isNamedExportBindings } from "typescript"
 
 const tokenSecret: string = process.env.TOKEN_SECRET || "secret"
 
@@ -59,10 +60,24 @@ const auth = async (req: Request, res: Response) => {
     }
 }
 
+const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const authorizationHeader = req.headers.authorization
+        if (authorizationHeader) {
+            const token = authorizationHeader.split(" ")[1]
+            const decoded = jwt.verify(token, tokenSecret)
+        }
+        next()
+    }
+    catch (err) {
+        res.status(401)
+    }
+}
+
 
 const userRoutes = (app: express.Application) => {
-    app.get("/users", index)
-    app.get("/users/:id", show)
+    app.get("/users", verifyToken, index)
+    app.get("/users/:id", verifyToken, show)
     app.post("/users", create)
 }
 
