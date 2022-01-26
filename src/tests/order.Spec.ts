@@ -62,22 +62,7 @@ describe("Order Model tests", ()=> {
     })
 })
 
-describe("Product handler tests", () => {
-    it("GET /orders/user/:id works", async() => {
-        const response = await request.get("/orders/user/1")
-        expect(response.status).toBe(200)
-    })
-
-    it("GET /orders/user/:id sends error with invalid params", async() => {
-        const response = await request.get("/orders/user/abc")
-        expect(response.status).not.toBe(200)
-    })
-
-    it("GET /orders/user/:id/current works", async() => {
-        const response = await request.get("/orders/user/1/current")
-        expect(response.status).toBe(200)
-    })
-
+describe("Order handler tests", () => {
     it("POST /orders works", async() => {
         const response = await request.post("/orders").send({
             status: "active",
@@ -107,5 +92,34 @@ describe("Product handler tests", () => {
             invalid_data: "invalid"
         })
         expect(response.status).not.toBe(200)
+    })
+
+    it("GET /orders/user/:id works", async() => {
+        const user = await user_store.create({
+            id: 0,
+            username: "username_test5",
+            firstname: "firstname_test",
+            lastname: "lastname_test",
+            password: "password_test"
+        });
+        const order = await order_store.create({
+            id: 0,
+            status: "active",
+            user_id: Number(user.id),
+        });
+        console.log(user.id)
+        console.log(order.user_id)
+        const response = await request.get(`/orders/user/${user.id}`)
+        expect(response.status).toBe(200)
+    })
+
+    it("GET /orders/user/:id sends error with invalid params", async() => {
+        const response = await request.get("/orders/user/abc")
+        expect(response.status).not.toBe(200)
+    })
+
+    it("GET /orders/user/:id/current works", async() => {
+        const response = await request.get("/orders/user/1/current")
+        expect(response.status).toBe(200)
     })
 })

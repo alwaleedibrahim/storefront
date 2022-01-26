@@ -32,21 +32,6 @@ describe("product Model tests", ()=> {
 
 
 describe("Product handler tests", () => {
-    it("GET /products/:id works", async() => {
-        const response = await request.get("/products/1")
-        expect(response.status).toBe(200)
-    })
-
-    it("GET /products/:id sends error with invalid params", async() => {
-        const response = await request.get("/products/abc")
-        expect(response.status).not.toBe(200)
-    })
-
-    it("GET /products works", async() => {
-        const response = await request.get("/products")
-        expect(response.status).toBe(200)
-    })
-
     it("POST /products works", async() => {
         const response = await request.post("/products").send({
             name: "product1",
@@ -60,5 +45,20 @@ describe("Product handler tests", () => {
             invalid_data: "invalid"
         })
         expect(response.status).not.toBe(200)
+    })
+
+    it("GET /products/:id works", async() => {
+        const response = await request.get("/products/1")
+        expect(response.status).toBe(200)
+    })
+
+    it("GET /products/:id sends error with invalid params", async() => {
+        const response = await request.get("/products/abc")
+        expect(response.status).not.toBe(200)
+    })
+
+    it("GET /products works", async() => {
+        const response = await request.get("/products")
+        expect(response.status).toBe(200)
     })
 })

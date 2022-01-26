@@ -60,6 +60,51 @@ describe("User Model tests", ()=> {
 })
 
 describe("User handler tests", () => {
+
+    it("POST /users works", async() => {
+        const response = await request.post("/users")
+        .send({
+            username: "username_test4",
+            firstname: "firstname_test",
+            lastname: "lastname_test",
+            password: "password_test"
+        })
+        .set("Content-Type", "application/x-www-form-urlencoded")
+        expect(response.status).toBe(200)
+    })
+
+    it("POST /users sends error", async() => {
+        const response = await request.post("/users").send({
+            invalid_data: "invalid"
+        })
+        expect(response.status).not.toBe(200)
+    })
+
+    it("POST /login works", async() => {
+        const user = await user_store.create({
+            id: 0,
+            username: "username_test12",
+            firstname: "firstname_test",
+            lastname: "lastname_test",
+            password: "password_test"
+        });
+        const response = await request.post("/login")
+        .send({
+            username: "username_test12",
+            password: "password_test"
+        })
+        .set("Content-Type", "application/x-www-form-urlencoded")
+        expect(response.status).toBe(200)
+    })
+
+    it("POST /login sends error", async() => {
+        const response = await request.post("/login").send({
+            username: "invalid",
+            password: "invalid"
+        })
+        expect(response.status).not.toBe(200)
+    })
+
     it("GET /users/:id works", async() => {
         const response = await request.get("/users/1")
         expect(response.status).toBe(200)
@@ -74,38 +119,4 @@ describe("User handler tests", () => {
         const response = await request.get("/users")
         expect(response.status).toBe(200)
     })
-
-    it("POST /users works", async() => {
-        const response = await request.post("/users").send({
-            username: "username_test4",
-            firstname: "firstname_test",
-            lastname: "lastname_test",
-            password: "password_test"
-        })
-        expect(response.status).toBe(200)
-    })
-
-    it("POST /users sends error", async() => {
-        const response = await request.post("/users").send({
-            invalid_data: "invalid"
-        })
-        expect(response.status).not.toBe(200)
-    })
-
-    it("POST /login works", async() => {
-        const response = await request.post("/users").send({
-            username: "username_test",
-            password: "password_test"
-        })
-        expect(response.status).toBe(200)
-    })
-
-    it("POST /login sends error", async() => {
-        const response = await request.post("/users").send({
-            username: "invalid",
-            password: "invalid"
-        })
-        expect(response.status).not.toBe(200)
-    })
-
 })
