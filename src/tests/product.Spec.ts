@@ -37,6 +37,7 @@ describe("Product handler tests", () => {
             name: "product1",
             price: 10
         })
+        .set("Content-Type", "application/x-www-form-urlencoded")
         expect(response.status).toBe(200)
     })
 
@@ -44,6 +45,7 @@ describe("Product handler tests", () => {
         const response = await request.post("/products").send({
             invalid_data: "invalid"
         })
+        .set("Content-Type", "application/x-www-form-urlencoded")
         expect(response.status).not.toBe(200)
     })
 

@@ -77,6 +77,7 @@ describe("User handler tests", () => {
         const response = await request.post("/users").send({
             invalid_data: "invalid"
         })
+        .set("Content-Type", "application/x-www-form-urlencoded")
         expect(response.status).not.toBe(200)
     })
 
@@ -102,6 +103,7 @@ describe("User handler tests", () => {
             username: "invalid",
             password: "invalid"
         })
+        .set("Content-Type", "application/x-www-form-urlencoded")
         expect(response.status).not.toBe(200)
     })
 

@@ -64,10 +64,18 @@ describe("Order Model tests", ()=> {
 
 describe("Order handler tests", () => {
     it("POST /orders works", async() => {
+        const user = await user_store.create({
+            id: 0,
+            username: "username_test13",
+            firstname: "firstname_test",
+            lastname: "lastname_test",
+            password: "password_test"
+        });
         const response = await request.post("/orders").send({
             status: "active",
-            user_id: 1
+            user_id: user.id
         })
+        .set("Content-Type", "application/x-www-form-urlencoded")
         expect(response.status).toBe(200)
     })
 
@@ -75,6 +83,7 @@ describe("Order handler tests", () => {
         const response = await request.post("/orders").send({
             invalid_data: "invalid"
         })
+        .set("Content-Type", "application/x-www-form-urlencoded")
         expect(response.status).not.toBe(200)
     })
 
@@ -84,6 +93,7 @@ describe("Order handler tests", () => {
             product_id: 1,
             quantity: 1
         })
+        .set("Content-Type", "application/x-www-form-urlencoded")
         expect(response.status).toBe(200)
     })
 
@@ -91,6 +101,7 @@ describe("Order handler tests", () => {
         const response = await request.post("/orders/addProduct").send({
             invalid_data: "invalid"
         })
+        .set("Content-Type", "application/x-www-form-urlencoded")
         expect(response.status).not.toBe(200)
     })
 
@@ -107,8 +118,6 @@ describe("Order handler tests", () => {
             status: "active",
             user_id: Number(user.id),
         });
-        console.log(user.id)
-        console.log(order.user_id)
         const response = await request.get(`/orders/user/${user.id}`)
         expect(response.status).toBe(200)
     })
@@ -119,7 +128,19 @@ describe("Order handler tests", () => {
     })
 
     it("GET /orders/user/:id/current works", async() => {
-        const response = await request.get("/orders/user/1/current")
+        const user = await user_store.create({
+            id: 0,
+            username: "username_test15",
+            firstname: "firstname_test",
+            lastname: "lastname_test",
+            password: "password_test"
+        });
+        const order = await order_store.create({
+            id: 0,
+            status: "active",
+            user_id: Number(user.id),
+        });
+        const response = await request.get(`/orders/user/${order.user_id}/current`)
         expect(response.status).toBe(200)
     })
 })

@@ -66,7 +66,7 @@ export class OrderStore {
             return result.rows[0]
         }
         catch (err) {
-            throw new Error("Cannot get current order")
+            throw new Error(`Cannot get current order ${err}`)
         }
     }
 }

@@ -56,11 +56,11 @@ const showCurrentOrder = async(req: Request, res: Response) => {
     }
 }
 
-const orderRouters = (app: express.Application) => {
+const orderRoutes = (app: express.Application) => {
     app.post("/orders", auth.verifyToken, create)
     app.post("/orders/addProduct", auth.verifyToken, addProduct)
     app.get("/orders/user/:id", auth.verifyToken, ShowOrdersByUser)
     app.get("/orders/user/:id/current", auth.verifyToken, showCurrentOrder)
 }
 
-export default orderRouters
+export default orderRoutes
