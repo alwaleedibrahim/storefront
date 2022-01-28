@@ -112,11 +112,6 @@ describe("User handler tests", () => {
         expect(response.status).toBe(200)
     })
 
-    it("GET /users/:id sends error with invalid params", async() => {
-        const response = await request.get("/users/abc")
-        expect(response.status).not.toBe(200)
-    })
-
     it("GET /users works", async() => {
         const response = await request.get("/users")
         expect(response.status).toBe(200)

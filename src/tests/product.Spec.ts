@@ -54,11 +54,6 @@ describe("Product handler tests", () => {
         expect(response.status).toBe(200)
     })
 
-    it("GET /products/:id sends error with invalid params", async() => {
-        const response = await request.get("/products/abc")
-        expect(response.status).not.toBe(200)
-    })
-
     it("GET /products works", async() => {
         const response = await request.get("/products")
         expect(response.status).toBe(200)

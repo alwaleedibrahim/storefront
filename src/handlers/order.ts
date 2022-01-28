@@ -48,7 +48,7 @@ const ShowOrdersByUser = async(req: Request, res: Response) => {
 
 const showCurrentOrder = async(req: Request, res: Response) => {
     try {
-        const currentOrder = await order_store.currentOrder(Number(req.body.user_id))
+        const currentOrder = await order_store.currentOrder(Number(req.params.id))
         res.send(currentOrder)
     }
     catch(err) {

@@ -122,11 +122,6 @@ describe("Order handler tests", () => {
         expect(response.status).toBe(200)
     })
 
-    it("GET /orders/user/:id sends error with invalid params", async() => {
-        const response = await request.get("/orders/user/abc")
-        expect(response.status).not.toBe(200)
-    })
-
     it("GET /orders/user/:id/current works", async() => {
         const user = await user_store.create({
             id: 0,
@@ -140,7 +135,7 @@ describe("Order handler tests", () => {
             status: "active",
             user_id: Number(user.id),
         });
-        const response = await request.get(`/orders/user/${order.user_id}/current`)
+        const response = await request.get(`/orders/user/${user.id}/current`)
         expect(response.status).toBe(200)
     })
 })
